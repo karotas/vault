@@ -21,6 +21,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import LiveHelpIcon from "@mui/icons-material/LiveHelp";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Context } from "./Apps";
+import { Link } from "react-router-dom";
 
 
 function Drawer({ open, setopen }) {
@@ -168,6 +169,12 @@ function Drawer({ open, setopen }) {
               <ListItemText>faq</ListItemText>
             </ListItemButton>
           </ListItem>
+          <Link
+          to="/user/login"
+          style={{
+            all:"initial"
+          }}
+          >
           <Button
             color={darktheme?"dark":"light"}
             sx={{
@@ -181,7 +188,7 @@ function Drawer({ open, setopen }) {
             endIcon={<LogoutIcon />}
           >
             logout
-          </Button>
+          </Button></Link>
         </List>
       </Dr>
     </>
