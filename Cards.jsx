@@ -67,11 +67,16 @@ function Cards() {
   let [openDelete,setOpenDelete]=useState(false)
   let[deleted,setdeleted]=useState(false)
   let[tryagain,settryagain]=useState(false)
+  let[index1,setindex1]=useState(false)
   document.body.style.backgroundColor=darktheme?"#434242":"#fff"
-
+  let val=JSON.parse(localStorage.getItem("startingPage")||1)
+let [startingPage,setstartingPage]=
+useState(val)
   useEffect(() => {
+
     let url="http://localhost:5000/user/data"
    url="http://192.168.29.126:5000/user/data"
+
     axios({
       method: "get",
       url: url,
@@ -79,14 +84,30 @@ function Cards() {
     })
       .then((res) => {
         setCollection(res.data);
-        setCardData(res.data.slice(0, 10));
+        console.log(70>9)
+        console.log(res.data.length/10<startingPage)
+        if(res.data.length/10<startingPage){
+         
+  setindex1(true)
+  setstartingPage(1)
+         
+        }
+     
 
-        setTimeout(() => {
-          setskeleton(true);
-        }, 1000);
-      })
+
+    setCardData(res.data.slice((startingPage-1)*10, startingPage* 10));
+  
+
+    setCardData(res.data.slice(0,  10));
+
+
+    setTimeout(() => {
+      setskeleton(true);
+    }, 1000);
+  })
       .catch((err) => console.log(err.message));
   }, []);
+
   return (
     <>
    <Box
@@ -164,9 +185,10 @@ function Cards() {
             console.log(demo);
           setpage([v * 10 - 10, v * 10])
             console.log(v * 10 - 10, v * 10);
+            localStorage.setItem("startingPage",v)
             demo = [];
           }}
-          defaultPage={1}
+          defaultPage={index1?1:startingPage}
           showLastButton
           showFirstButton
           size="medium"

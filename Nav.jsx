@@ -13,7 +13,7 @@ import { useState } from "react";
 import { useContext } from "react";
 import { Context } from "./Apps";
 
-function Nav() {
+function Nav({open}) {
     let {
         darktheme,
 
@@ -33,9 +33,11 @@ function Nav() {
         color={darktheme?"dark":"light"}
       >
         <Toolbar>
-          <IconButton   color={!darktheme?"dark":"light"} onClick={() => setDrawerOpen(true)}>
-            <MenuIcon />
-          </IconButton>
+        {
+          open&&  <IconButton   color={!darktheme?"dark":"light"} onClick={() => setDrawerOpen(true)}>
+          <MenuIcon />
+        </IconButton>
+        }
           <Typography variant="h5"
           
        sx={{
@@ -43,43 +45,47 @@ function Nav() {
        }}
           >vault</Typography>
         </Toolbar>
-        <Stack
-          flex={1}
-          flexDirection="row"
-          alignItems={"center"}
-          justifyContent="flex-end"
+      {
+        open&&  <Stack
+        flex={1}
+        flexDirection="row"
+        alignItems={"center"}
+        justifyContent="flex-end"
+      >
+        <Button
+          variant="text"
+          color={!darktheme?"dark":"light"}
+          sx={{
+            height: 35,
+            minWidth: "auto",
+            width: 100,
+            mr: 2,
+            color:!darktheme?"dark":"light",
+            borderRadius: 5,
+          }}
         >
-          <Button
-            variant="text"
-            color={!darktheme?"dark":"light"}
-            sx={{
-              height: 35,
-              minWidth: "auto",
-              width: 100,
-              mr: 2,
-              color:!darktheme?"dark":"light",
-              borderRadius: 5,
-            }}
-          >
-            home
-          </Button>
-          <Button
-            variant="text"
-            color={!darktheme?"dark":"light"}
-            sx={{
-              height: 35,
-              minWidth: "auto",
-              width: 100,
-              mr: 4,
-              color:!darktheme?"dark":"light",
-              borderRadius: 5,
-            }}
-          >
-           contact
-          </Button>
-        </Stack>
+          home
+        </Button>
+        <Button
+          variant="text"
+          color={!darktheme?"dark":"light"}
+          sx={{
+            height: 35,
+            minWidth: "auto",
+            width: 100,
+            mr: 4,
+            color:!darktheme?"dark":"light",
+            borderRadius: 5,
+          }}
+        >
+         contact
+        </Button>
+      </Stack>
+      }
       </AppBar>
-      <Drawer open={drawerOpen} setopen={setDrawerOpen} />
+      {
+        open&&<Drawer open={drawerOpen} setopen={setDrawerOpen} />
+      }
     </>
   );
 }
