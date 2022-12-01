@@ -1,13 +1,19 @@
 import { Button,  Grid, TextField, Backdrop, CircularProgress , Typography, InputAdornment} from '@mui/material'
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import { Link } from 'react-router-dom'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useForm } from "react-hook-form";
+import { Context } from './Apps';
+
 
 function Register() {
 let [passmatch,setpassmatch]=useState(false)
 let [loader,setloader]=useState(false)
+let { 
+    setdarktheme}=useContext(Context)
+    setdarktheme(false)
+    document.body.style.backgroundColor="#fff"
 let [showpassword,setshowpassword]=useState({
     password:false,
     confirmpassword:false

@@ -4,9 +4,14 @@ import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-
+import { Context } from './Apps';
+import {useContext } from 'react';
 function Login() {
     let [loader,setloader]=useState(false)
+    let {  
+        setdarktheme}=useContext(Context)
+        document.body.style.backgroundColor="#fff"
+        setdarktheme(false)
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
         setloader(true)
@@ -14,6 +19,7 @@ function Login() {
             setloader(false)
         }, 2000);
     };
+   
 let [showpassword,setshowpassword]=useState(false)
   return (
 

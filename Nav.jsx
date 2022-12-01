@@ -6,18 +6,27 @@ import {
   Typography,
   Stack,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import Drawer from "./Drawer";
 import { useState } from "react";
 import { useContext } from "react";
 import { Context } from "./Apps";
+import { Link } from "react-router-dom";
+import Loader from "./dragand_Drop/Loader";
 
 function Nav({open}) {
     let {
         darktheme,
-
+        
       }=useContext(Context)
+      useEffect(()=>{
+if(open){
+  setDrawerOpen(false)
+  
+}
+      },[])
+ 
   let [drawerOpen, setDrawerOpen] = useState(false);
   return (
     <>
@@ -52,7 +61,13 @@ function Nav({open}) {
         alignItems={"center"}
         justifyContent="flex-end"
       >
-        <Button
+        <Link
+        to="/"
+        style={{
+          all:"initial"
+        }}
+        >
+          <Button
           variant="text"
           color={!darktheme?"dark":"light"}
           sx={{
@@ -66,6 +81,7 @@ function Nav({open}) {
         >
           home
         </Button>
+        </Link>
         <Button
           variant="text"
           color={!darktheme?"dark":"light"}
@@ -82,6 +98,9 @@ function Nav({open}) {
         </Button>
       </Stack>
       }
+      <Loader
+
+      />
       </AppBar>
       {
         open&&<Drawer open={drawerOpen} setopen={setDrawerOpen} />

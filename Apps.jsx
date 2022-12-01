@@ -6,6 +6,7 @@ import Cards from "./Cards";
 import Login from "./Login";
 import Nav from "./Nav";
 import Register from "./Register";
+import APPS from "./dragand_Drop/Apps"
 export let Context=createContext()
 function Apps() {
   document.title="Vault"
@@ -20,6 +21,7 @@ function Apps() {
     }
   })
   let [darktheme,setdarktheme]=useState(false)
+  let [showloader,setshowloader]=useState(false)
   return (
     <>
     
@@ -27,7 +29,8 @@ function Apps() {
     
     value={{
       darktheme,
-      setdarktheme
+      setdarktheme,
+      showloader,setshowloader
     }}
     >
     <ThemeProvider
@@ -55,6 +58,13 @@ function Apps() {
         
         />
    <Register/>
+        </>}/>
+        <Route path="/user/upload" element={<>
+        <Nav
+        open={true}
+        
+        />
+  <APPS/>
         </>}/>
       </Routes>
    

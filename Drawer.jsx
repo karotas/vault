@@ -21,6 +21,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import LiveHelpIcon from "@mui/icons-material/LiveHelp";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Context } from "./Apps";
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { Link } from "react-router-dom";
 
 
@@ -30,6 +31,7 @@ function Drawer({ open, setopen }) {
     darktheme,
     setdarktheme
   }=useContext(Context)
+
   return (
     <>
       <Dr anchor="left" open={open} onClose={() => setopen(false)}>
@@ -38,6 +40,7 @@ function Drawer({ open, setopen }) {
           sx={{
             width: 300,
             height:"100%",
+            pl:1,
             backgroundColor:darktheme?"dark.main":"light.main"
           }}
         >
@@ -105,12 +108,24 @@ function Drawer({ open, setopen }) {
                 color:!darktheme?"dark.main":"light.main",
               }}
           >
-            <ListItemButton
+      <Link
+      onClick={()=>setopen(false)}
+      to="/user/upload"
+      style={{
+        all:"initial",
+        width:"100%",
+        
+      }}
+      >
+      
+      
+      <ListItemButton
               sx={{
                 borderRadius: 5,
+                color:darktheme?"light.main":"dark.main"
               }}
             >
-              <SettingsIcon
+              <FileUploadIcon
          
                 sx={{
                   mr: 1,
@@ -118,9 +133,12 @@ function Drawer({ open, setopen }) {
                 }}
               />
 
-              <ListItemText>settings</ListItemText>
+              <ListItemText>upload</ListItemText>
             </ListItemButton>
+      
+      </Link>
           </ListItem>
+        
           <ListItem
                 sx={{
                     color:!darktheme?"dark.main":"light.main",
@@ -167,6 +185,27 @@ function Drawer({ open, setopen }) {
               />
 
               <ListItemText>faq</ListItemText>
+            </ListItemButton>
+          </ListItem>
+          <ListItem
+               sx={{
+                color:!darktheme?"dark.main":"light.main",
+              }}
+          >
+            <ListItemButton
+              sx={{
+                borderRadius: 5,
+              }}
+            >
+              <SettingsIcon
+         
+                sx={{
+                  mr: 1,
+                  color:darktheme?"light.main":"dark.main"
+                }}
+              />
+
+              <ListItemText>settings</ListItemText>
             </ListItemButton>
           </ListItem>
           <Link

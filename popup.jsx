@@ -1,9 +1,10 @@
-import { Modal, Paper, } from '@mui/material'
-import React from 'react'
+import { Modal, Paper, Button, Typography } from '@mui/material'
+import React, { useContext } from 'react'
 import {makeStyles} from "@mui/styles"
-import { Button, Typography } from '@material-ui/core'
+
 import { Stack } from '@mui/system'
 import axios from "axios"
+import { Context } from './Apps'
 let usestyles=makeStyles({
     paper:{
 width:250,
@@ -20,21 +21,22 @@ padding:"10px 0"
     }
 })
 
-function popup({open,setopen,index,collection, 
+function Popup({open,setopen,index,collection, 
       setcollection,setdata,i,   cardData,
       settryagain,
       setdeleted
     }) {
 
     let classes=usestyles()
-    
+    let {darktheme}=useContext(Context)
     function deleteItem(){
+            
+
         let demo=[...collection]
         let democarddata=[...cardData]
         console.log(demo.splice(index,1))
         console.log(democarddata.splice(i,1))
-     
-        console.log(index)
+ 
    let url="http://localhost:5000/user/update"
    url="http://192.168.29.126:5000/user/update"  
 
@@ -87,8 +89,14 @@ sx={{
 <Paper
 elevation={6}
 className={classes.paper}
+sx={{
+    backgroundColor:darktheme?"dark.main":"light.main"
+}}
 >
-<Typography>do you want delete this ?</Typography>
+<Typography
+
+color={darktheme?"light.main":"dark.main"}
+>do you want delete this ?</Typography>
 <Stack
 direction={"row"}
 height={50}
@@ -98,11 +106,13 @@ width="85%"
 spacing={1}
 >
 <Button
+color={darktheme?"light":"primary"}
 onClick={deleteItem}
 >
         yes
     </Button>
     <Button
+    color={darktheme?"light":"primary"}
     onClick={cancel}
     >
        cancel
@@ -115,4 +125,4 @@ onClick={deleteItem}
   )
 }
 
-export default popup
+export default Popup
