@@ -6,8 +6,10 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Context } from './Apps';
 import {useContext } from 'react';
+import {useNavigate} from "react-router-dom"
 function Login() {
     let [loader,setloader]=useState(false)
+    let navigate=useNavigate()
     let {  
         setdarktheme}=useContext(Context)
         document.body.style.backgroundColor="#fff"
@@ -17,6 +19,7 @@ function Login() {
         setloader(true)
         setTimeout(() => {
             setloader(false)
+            navigate("/")
         }, 2000);
     };
    

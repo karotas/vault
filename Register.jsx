@@ -5,11 +5,12 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useForm } from "react-hook-form";
 import { Context } from './Apps';
-
+import {useNavigate} from "react-router-dom"
 
 function Register() {
 let [passmatch,setpassmatch]=useState(false)
 let [loader,setloader]=useState(false)
+let navigate=useNavigate()
 let { 
     setdarktheme}=useContext(Context)
     setdarktheme(false)
@@ -29,6 +30,7 @@ setpassmatch(false)
 setloader(true)
 setTimeout(()=>{
     setloader(false)
+    navigate("/user/login")
 },2000)
 };
   return (

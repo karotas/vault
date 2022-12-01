@@ -26,7 +26,9 @@ import { Link } from "react-router-dom";
 
 
 function Drawer({ open, setopen }) {
-
+function close(){
+ setopen(false)
+}
   let {
     darktheme,
     setdarktheme
@@ -89,7 +91,7 @@ function Drawer({ open, setopen }) {
              
              />
               <Button
-                onClick={() => setopen(false)}
+                onClick={close}
                 sx={{
                   position: "absolute",
                   top: -4,
@@ -146,6 +148,7 @@ function Drawer({ open, setopen }) {
               >
           
             <ListItemButton
+            onClick={close}
               sx={{
                 borderRadius: 5,
               }}
@@ -172,6 +175,7 @@ function Drawer({ open, setopen }) {
       
           >
             <ListItemButton
+             onClick={close}
               sx={{
                 borderRadius: 5,
               }}
@@ -193,6 +197,7 @@ function Drawer({ open, setopen }) {
               }}
           >
             <ListItemButton
+             onClick={close}
               sx={{
                 borderRadius: 5,
               }}
@@ -210,6 +215,7 @@ function Drawer({ open, setopen }) {
           </ListItem>
           <Link
           to="/user/login"
+          onClick={close}
           style={{
             all:"initial"
           }}
