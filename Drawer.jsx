@@ -31,7 +31,7 @@ function close(){
 }
   let {
     darktheme,
-    setdarktheme
+    setdarktheme,username,
   }=useContext(Context)
 
   return (
@@ -55,7 +55,7 @@ function close(){
               mb={1}
             >
               <Avatar
-                src="./assets/vault.png"
+                src="./assets/profile.jpg"
                 sx={{
                   width: 50,
                   height: 50,
@@ -65,7 +65,7 @@ function close(){
               sx={{
                  color:!darktheme?"dark.main":"light.main",
               }}
-              >tomy</Typography>
+              >{username}</Typography>
             </Stack>
             <Stack
               direction={"row"}

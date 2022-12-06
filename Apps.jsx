@@ -22,6 +22,7 @@ function Apps() {
   })
   let [darktheme,setdarktheme]=useState(false)
   let [showloader,setshowloader]=useState(false)
+  let [username,setUsername]=useState("")
   return (
     <>
     
@@ -30,7 +31,9 @@ function Apps() {
     value={{
       darktheme,
       setdarktheme,
-      showloader,setshowloader
+      showloader,setshowloader,
+      username,
+      setUsername
     }}
     >
     <ThemeProvider

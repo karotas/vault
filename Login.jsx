@@ -1,4 +1,4 @@
-import { Button,  Grid, TextField, Backdrop, CircularProgress, Typography, InputAdornment} from '@mui/material'
+import { Button,  Grid,Snackbar ,Alert, TextField, Backdrop, CircularProgress, Typography, InputAdornment} from '@mui/material'
 import React, { useState } from 'react'
 import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom'
@@ -7,26 +7,49 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Context } from './Apps';
 import {useContext } from 'react';
 import {useNavigate} from "react-router-dom"
+import CloseIcon from '@mui/icons-material/Close';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 function Login() {
     let [loader,setloader]=useState(false)
+    let [incorrectLogin,setIncorrectLogin]=useState(false)
     let navigate=useNavigate()
     let {  
-        setdarktheme}=useContext(Context)
+        setdarktheme, 
+        setUsername}=useContext(Context)
         document.body.style.backgroundColor="#fff"
         setdarktheme(false)
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
+        let user=JSON.parse(localStorage.getItem?.("users"))||[{
+            username:"tomy",
+            password:"123456"
+        }]
         setloader(true)
+       user.forEach((item)=>{
+        if(data.username==item.username&&data.password==item.password){
+            setUsername(item.username)
+            setTimeout(() => {
+                setloader(false)
+                navigate("/")
+            }, 2000);
+            return
+        }
         setTimeout(() => {
             setloader(false)
-            navigate("/")
+            setIncorrectLogin(true)
         }, 2000);
+       })
+   
+    
+ 
     };
    
 let [showpassword,setshowpassword]=useState(false)
   return (
 
    
+<>
+
 <Grid
 container
 justifyContent={"center"}
@@ -145,8 +168,54 @@ invisible
 
 </Backdrop>
     </Grid>
- 
+
 </Grid>
+<Snackbar
+autoHideDuration={2000}
+onClose={(_,reason)=>{
+    if (reason === 'clickaway') {
+        return;
+      }
+      setIncorrectLogin(false)
+}}
+open={incorrectLogin}
+
+
+ >
+    <Alert
+    sx={{
+        width:"100%",
+        height:"100%",
+       display:'flex',
+       alignItems:"center",
+    }}
+    color="error"
+    variant='filled'
+icon={<WarningAmberIcon/>}
+action={<Button
+color='error'
+sx={{
+    minWidth:"auto",
+    width:"auto",
+
+}}
+onClick={()=>setIncorrectLogin(false)}
+>
+    <CloseIcon
+    fontSize='small'
+  sx={{
+    fill:"#fff",
+    top:-3,
+    position:"relative"
+  }}
+    />
+</Button>}
+    >
+        username and password are incorrect
+    </Alert>
+    
+ </Snackbar>
+</>
 
   )
 }

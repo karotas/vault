@@ -1,6 +1,6 @@
 import { Button,  Grid, TextField, Backdrop, CircularProgress , Typography, InputAdornment} from '@mui/material'
 import React, { useState,useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { json, Link } from 'react-router-dom'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useForm } from "react-hook-form";
@@ -19,13 +19,21 @@ let [showpassword,setshowpassword]=useState({
     password:false,
     confirmpassword:false
 })
-const { register, handleSubmit, watch, formState: { errors } } = useForm();
+const { register, handleSubmit,  formState: { errors } } = useForm();
 const onSubmit = data => {
+   
     if(data.confirm_password
 !==data.password        ){
     setpassmatch(true)
     return
 }
+let users=JSON.parse(localStorage.getItem?.("users"))||[]
+let {username,password}=data
+users.push({
+    username,
+    password
+})
+localStorage.setItem("users",JSON.stringify(users))
 setpassmatch(false)
 setloader(true)
 setTimeout(()=>{
