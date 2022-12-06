@@ -9,7 +9,7 @@ git clone https://github.com/karotas/vault.git
 
 ```
 
-###import the Apps.jsx file in your App.js file
+### import the Apps.jsx file in your App.js file
 ```javascript
 import Apps from "./Apps.jsx"
 ```
@@ -20,3 +20,18 @@ cd vault_desktop_app
 npm i electron
 npm start
 ```
+### if you want to use this app in a PWA app . then follow the below step
+<ul style="text-transform:capitalize">
+<li >
+<b >go to vault_pwa folder</b>
+</li>
+<li >
+<b >copy to the all files inside the vault_pwa folder</b>
+</li>
+<li >
+<b >then go to the react public folder</b>
+</li>
+<li >
+<b >paste to the files there  </b>
+</li>
+</ul>
