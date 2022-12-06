@@ -226,7 +226,12 @@ height:35,
           setOpen(false)
         }}
         sx={{
-          alignItems:"center",
+          alignItems:{
+            sm:"flex-start",
+            md: "center",
+            xs:"flex-start"
+          },
+   
           justifyContent:"center",
           display:"center",
        
@@ -242,6 +247,12 @@ height:35,
                 xs:"60%",
                 sm:"80%",
                 md:"90%",
+              },
+              mt:{
+xs:5,
+sm:5,
+md:0
+
               },
               width: "90%",
               display:"flex",

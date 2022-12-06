@@ -7,10 +7,12 @@ app.use(require("cors")())
 
 let valutdata=require("./data.json")
 
+
+
 app.get("/user/data",(req,res)=>{
 
     res.status(200).json(valutdata)
-    
+   
 
 })
 app.post("/user/update",(req,res)=>{
