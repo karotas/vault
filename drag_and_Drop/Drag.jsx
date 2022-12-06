@@ -277,7 +277,9 @@ md:0
 
             }}
           >
-            <input  {...getInputProps({
+            <TextField   inputProps={{
+              accept:".png, .jpg"
+            }} {...getInputProps({
               accept:".jpg"
             })} />
             {
@@ -326,6 +328,9 @@ md:0
           mt={0}
           >
             <TextField
+            inputProps={{
+              accept:".png, .jpg"
+            }}
             id="file"
             type="file"
             onChange={(e)=>{

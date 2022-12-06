@@ -28,7 +28,7 @@ function Login() {
        user.forEach((item)=>{
         if(data.username==item.username&&data.password==item.password){
             setUsername(item.username)
-            setTimeout(() => {
+            setTimeout(() => { 
                 setloader(false)
                 navigate("/")
             }, 2000);
