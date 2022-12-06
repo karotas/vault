@@ -13,7 +13,7 @@ import { useState } from "react";
 import { useContext } from "react";
 import { Context } from "./Apps";
 import { Link } from "react-router-dom";
-import Loader from "./dragand_Drop/Loader";
+import Loader from "./drag_and_Drop/Loader";
 
 function Nav({open}) {
     let {
