@@ -7,22 +7,23 @@ import {
   Button,
   Tooltip,
   Box,
-  Snackbar, Typography ,
+  Snackbar,
+  Typography,
   PaginationItem,
-  Alert
+  Alert,
 } from "@mui/material";
-import ReplayIcon from '@mui/icons-material/Replay';
+import ReplayIcon from "@mui/icons-material/Replay";
 import React from "react";
 import { makeStyles } from "@mui/styles";
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
-import {  ImageListItem, } from "@material-ui/core";
-import DeleteIcon from '@mui/icons-material/Delete';
+import { ImageListItem } from "@material-ui/core";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { Stack } from "@mui/system";
 import { useContext } from "react";
 import { Context } from "./Apps";
-import Popup from "./popup"
+import Popup from "./popup";
 let useStyles = makeStyles({
   img: {
     height: "100%",
@@ -53,29 +54,23 @@ let useStyles = makeStyles({
 
 function Cards() {
   let classes = useStyles();
-  
 
-  let {
-    darktheme,
-    
-  }=useContext(Context)
+  let { darktheme } = useContext(Context);
   let [collection, setCollection] = useState([]);
   let [cardData, setCardData] = useState([]);
   let [skeleton, setskeleton] = useState(false);
-  let [page, setpage] = useState([0,10]);
+  let [page, setpage] = useState([0, 10]);
   let [index, setindex] = useState(0);
-  let [openDelete,setOpenDelete]=useState(false)
-  let[deleted,setdeleted]=useState(false)
-  let[tryagain,settryagain]=useState(false)
-  let[index1,setindex1]=useState(false)
-  document.body.style.backgroundColor=darktheme?"#434242":"#fff"
-  let val=JSON.parse(localStorage.getItem("startingPage")||1)
-let [startingPage,setstartingPage]=
-useState(val)
+  let [openDelete, setOpenDelete] = useState(false);
+  let [deleted, setdeleted] = useState(false);
+  let [tryagain, settryagain] = useState(false);
+  let [index1, setindex1] = useState(false);
+  document.body.style.backgroundColor = darktheme ? "#434242" : "#fff";
+  let val = JSON.parse(localStorage.getItem("startingPage") || 1);
+  let [startingPage, setstartingPage] = useState(val);
   useEffect(() => {
-
-    let url="http://localhost:5000/user/data"
-   url="http://192.168.29.126:5000/user/data"
+    let url = "http://localhost:5000/user/data";
+    url = "http://192.168.29.126:5000/user/data";
 
     axios({
       method: "get",
@@ -84,170 +79,155 @@ useState(val)
     })
       .then((res) => {
         setCollection(res.data);
-        console.log(70>9)
-        console.log(res.data.length/10<startingPage)
-        if(res.data.length/10<startingPage){
-         
-  setindex1(true)
-  setstartingPage(1)
-         
+
+        if (res.data.length / 10 < startingPage) {
+          setindex1(true);
+          setstartingPage(1);
         }
-     
 
+        setCardData(res.data.slice((startingPage - 1) * 10, startingPage * 10));
 
-    setCardData(res.data.slice((startingPage-1)*10, startingPage* 10));
-  
+        // setCardData(res.data.slice(0,  10));
+        console.log(cardData);
 
-    setCardData(res.data.slice(0,  10));
-
-
-    setTimeout(() => {
-      setskeleton(true);
-    }, 1000);
-  })
+        setTimeout(() => {
+          setskeleton(true);
+        }, 1000);
+      })
       .catch((err) => console.log(err.message));
   }, []);
 
   return (
     <>
-   <Box
-   component={"div"}
-   bgcolor={darktheme?"dark.main":"light.main"}
-
- height={"100%"}
-
-   >
-   <Grid container gap={2}  justifyContent="center" pb={1}>
-        {cardData.map((item,i) => (
-          <Grid item md={3.5} lg={2} sm={3} xs={11} pt={1}>
-            <ImageListItem className={classes.card}>
-              {skeleton ? (
-                <>
-                  <CardMedia
-                    component={"img"}
-                    // src={item.url}
-                    src={item.download_url}
+      <Box
+        component={"div"}
+        bgcolor={darktheme ? "dark.main" : "light.main"}
+        height={"100%"}
+      >
+        <Grid container gap={2} justifyContent="center" pb={1}>
+          {cardData.map((item, i) => (
+            <Grid item md={3.5} lg={2} sm={3} xs={11} pt={1}>
+              <ImageListItem className={classes.card}>
+                {skeleton ? (
+                  <>
+                    <CardMedia
+                      component={"img"}
+                      // src={item.url}
+                      src={item.download_url}
+                      className={classes.img}
+                      loading="lazy"
+                    />
+                    <ImageListItemBar
+                      title="author"
+                      className={classes.popup}
+                      subtitle={item.author}
+                      actionIcon={
+                        <Button
+                          onClick={() => {
+                            setOpenDelete(true);
+                            setindex(i);
+                          }}
+                          sx={{
+                            cursor: "pointer",
+                          }}
+                        >
+                          <Tooltip title="delete" placement="right">
+                            <DeleteIcon
+                              sx={{
+                                color: "#fff",
+                              }}
+                            />
+                          </Tooltip>
+                        </Button>
+                      }
+                    />
+                  </>
+                ) : (
+                  <Skeleton
                     className={classes.img}
-                    loading="lazy"
+                    height={200}
+                    animation="wave"
+                    variant="rounded"
                   />
-                  <ImageListItemBar
-                    title="author"
-                    className={classes.popup}
-                    subtitle={item.author}
-                    actionIcon={
-                      <Button
-                      onClick={()=>{
-             
-                        setOpenDelete(true)
-                  setindex(i)
-                      }}
-                      sx={{
-                        cursor:"pointer"
-                      }}
-                      >
-                        <Tooltip
-                         title="delete"  placement="right">
-                          <DeleteIcon
+                )}
+              </ImageListItem>
+            </Grid>
+          ))}
+        </Grid>
 
-                            sx={{
-                              color: "#fff",
-                            }}
-                          />
-                        </Tooltip>
-                      </Button>
-                    }
-                  />
-                </>
-              ) : (
-                <Skeleton
-                  className={classes.img}
-                  height={200}
-                  animation="wave"
-                  variant="rounded"
-                />
-              )}
-            </ImageListItem>
-          </Grid>
-        ))}
-      </Grid>
+        <Stack
+          mt={3}
+          bgcolor={darktheme ? "dark.main" : "light.main"}
+          alignItems="center"
+          mb={2}
+        >
+          <Pagination
+            count={Math.ceil(collection.length / 10)}
+            onChange={(_, v) => {
+              let demo = [...collection];
 
-      <Stack mt={3}
-      bgcolor={darktheme?"dark.main":"light.main"}
-    
-      alignItems="center" mb={2}>
-        <Pagination
-          count={Math.ceil(collection.length / 10)}
-          onChange={(_, v) => {
-            let demo = [...collection];
-
-            demo = demo.slice(v * 10 - 10, v * 10);
-            setCardData(demo);
-            console.log(demo);
-          setpage([v * 10 - 10, v * 10])
-            console.log(v * 10 - 10, v * 10);
-            localStorage.setItem("startingPage",v)
-            demo = [];
+              demo = demo.slice(v * 10 - 10, v * 10);
+              setCardData(demo);
+              console.log(demo);
+              setpage([v * 10 - 10, v * 10]);
+              console.log(v * 10 - 10, v * 10);
+              localStorage.setItem("startingPage", v);
+              demo = [];
+            }}
+            defaultPage={index1 ? 1 : startingPage}
+            showLastButton
+            showFirstButton
+            size="medium"
+            color={darktheme ? "primary" : "standard"}
+            renderItem={(item) => (
+              <PaginationItem
+                sx={{
+                  color: darktheme ? "light.main" : "dark.main",
+                }}
+                {...item}
+              />
+            )}
+          />
+        </Stack>
+      </Box>
+      <Popup
+        open={openDelete}
+        setopen={setOpenDelete}
+        setcollection={setCollection}
+        setdata={setCardData}
+        index={index + page[0]}
+        i={index}
+        cardData={cardData}
+        collection={collection}
+        setdeleted={setdeleted}
+        settryagain={settryagain}
+      />
+      <Snackbar open={deleted}>
+        <Alert
+          sx={{
+            width: 200,
           }}
-          defaultPage={index1?1:startingPage}
-          showLastButton
-          showFirstButton
-          size="medium"
-color={darktheme?'primary':"standard"}
-renderItem={(item) => (
-    <PaginationItem
-     sx={{
-        color:darktheme?"light.main":"dark.main"
-     }}
-      {...item}
-    />
-  )}
-      
-        />
-      </Stack>
-   </Box>
-   <Popup
-open={openDelete}
-  setopen={setOpenDelete}
-   setcollection={setCollection}
-   setdata={setCardData}
-   index={index+page[0]}
-   i={index}
-   cardData={cardData}
-   collection={collection}
-   setdeleted={setdeleted}
-   settryagain={settryagain}
-   />
-   <Snackbar
-   open={deleted}
-   >
-    <Alert
-    
-    sx={{
-      width:200
-    }}
-    >
-<Typography
-color={"green"}
->successfully deleted</Typography>
-    </Alert>
-   </Snackbar>
-   <Snackbar
-   open={tryagain}
-   >
-    <Alert
-      sx={{
-        width:200
-      }}
-      color="error"
-     icon={<ReplayIcon color="error"/>}
-    >
-<Typography
-sx={{
-  color:"error.main"
-}}
->try again</Typography>
-    </Alert>
-   </Snackbar>
+        >
+          <Typography color={"green"}>successfully deleted</Typography>
+        </Alert>
+      </Snackbar>
+      <Snackbar open={tryagain}>
+        <Alert
+          sx={{
+            width: 200,
+          }}
+          color="error"
+          icon={<ReplayIcon color="error" />}
+        >
+          <Typography
+            sx={{
+              color: "error.main",
+            }}
+          >
+            try again
+          </Typography>
+        </Alert>
+      </Snackbar>
     </>
   );
 }
